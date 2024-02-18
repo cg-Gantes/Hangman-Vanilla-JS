@@ -12,3 +12,9 @@ body {
   width: 100%;
   margin: 0 auto;
 }
+
+canvas {
+  color: white;
+  border: white dashed 2px;
+  padding: 15px;
+}
