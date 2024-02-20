@@ -43,4 +43,11 @@ window.onload = function () {
   let showCategory = document.getElementById("sCategory");
   let hint = document.getElementById("hint");
   let showClue = document.getElementById("clue");
+
+  //Alphabet UI
+
+  let buttons = function () {
+    myButtons = document.getElementById("buttons");
+    letters = document.createElement("ul");
+  };
 };
