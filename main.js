@@ -1,5 +1,5 @@
 window.onload = function () {
-  let alphabet = [
+  var alphabet = [
     "a",
     "b",
     "c",
@@ -28,29 +28,28 @@ window.onload = function () {
     "z",
   ];
 
-  let categories; //array of topics
-  let chosenCategory; //Selected category
-  let getHint; //Word get hint
-  let word; //Selected word
-  let guess; //guess
-  let guesses = []; //stored guesses
-  let lives; //lives
-  let counter; //count correct guess
-  let space; //number of spaces in word '-'
+  var categories; // Array of topics
+  var chosenCategory; // Selected catagory
+  var getHint; // Word getHint
+  var word; // Selected word
+  var guess; // Geuss
+  var geusses = []; // Stored geusses
+  var lives; // Lives
+  var counter; // Count correct geusses
+  var space; // Number of spaces in word '-'
 
-  //Get elements
-  let showLives = document.getElementById("myLives");
-  let showCategory = document.getElementById("sCategory");
-  let hint = document.getElementById("hint");
-  let showClue = document.getElementById("clue");
+  // Get elements
+  var showLives = document.getElementById("mylives");
+  var showCatagory = document.getElementById("scatagory");
+  var getHint = document.getElementById("hint");
+  var showClue = document.getElementById("clue");
 
-  //Alphabet UI
-
-  let buttons = function () {
+  // create alphabet ul
+  var buttons = function () {
     myButtons = document.getElementById("buttons");
     letters = document.createElement("ul");
 
-    for (let i = 0; i < alphabet.length; i++) {
+    for (var i = 0; i < alphabet.length; i++) {
       letters.id = "alphabet";
       list = document.createElement("li");
       list.id = "letter";
@@ -61,18 +60,19 @@ window.onload = function () {
     }
   };
 
-  let selectCat = function () {
+  // Select Catagory
+  var selectCat = function () {
     if (chosenCategory === categories[0]) {
-      categoryName.innerHTML =
-        "The chosen category is premier league football teams";
+      catagoryName.innerHTML =
+        "The Chosen Category Is Premier League Football Teams";
     } else if (chosenCategory === categories[1]) {
-      categoryName.innerHTML = "The chosen category is films";
+      catagoryName.innerHTML = "The Chosen Category Is Films";
     } else if (chosenCategory === categories[2]) {
-      categoryName.innerHTML = "The chosen category is cities";
+      catagoryName.innerHTML = "The Chosen Category Is Cities";
     }
   };
 
-  //create guesses ul
+  // Create geusses ul
   result = function () {
     wordHolder = document.getElementById("hold");
     correct = document.createElement("ul");
@@ -88,50 +88,50 @@ window.onload = function () {
         guess.innerHTML = "_";
       }
 
-      guesses.push(guess);
+      geusses.push(guess);
       wordHolder.appendChild(correct);
       correct.appendChild(guess);
     }
   };
 
-  //show lives
-  let comments = function () {
-    showLives.innerHTML = "You have " + lives + "lives";
+  // Show lives
+  comments = function () {
+    showLives.innerHTML = "You have " + lives + " lives";
     if (lives < 1) {
       showLives.innerHTML = "Game Over";
     }
-    for (let i = 0; i < guesses.length; i++) {
-      if (counter + space === guesses.lenght) {
+    for (var i = 0; i < geusses.length; i++) {
+      if (counter + space === geusses.length) {
         showLives.innerHTML = "You Win!";
       }
     }
   };
 
-  let animate = function () {
-    let drawMe = lives;
+  // Animate man
+  var animate = function () {
+    var drawMe = lives;
     drawArray[drawMe]();
   };
 
-  //Hangman
-
-  let canvas = function () {
-    myStickMan = document.getElementById("stickman");
-    context = myStickMan.getContext("2d");
+  // Hangman
+  canvas = function () {
+    myStickman = document.getElementById("stickman");
+    context = myStickman.getContext("2d");
     context.beginPath();
     context.strokeStyle = "#fff";
     context.lineWidth = 2;
   };
 
-  let head = function () {
-    myStickMan = document.getElementById("stickman");
-    context = myStickMan.getContext("2d");
+  head = function () {
+    myStickman = document.getElementById("stickman");
+    context = myStickman.getContext("2d");
     context.beginPath();
     context.arc(60, 25, 10, 0, Math.PI * 2, true);
     context.stroke();
   };
 
-  draw = function ($pathFromX, $pathFromY, $pathTox, $pathToy) {
-    context.moveTO($pathFromX, $pathFromY);
+  draw = function ($pathFromx, $pathFromy, $pathTox, $pathToy) {
+    context.moveTo($pathFromx, $pathFromy);
     context.lineTo($pathTox, $pathToy);
     context.stroke();
   };
@@ -143,24 +143,31 @@ window.onload = function () {
   frame2 = function () {
     draw(10, 0, 10, 600);
   };
+
   frame3 = function () {
     draw(0, 5, 70, 5);
   };
+
   frame4 = function () {
     draw(60, 5, 60, 15);
   };
+
   torso = function () {
     draw(60, 36, 60, 70);
   };
+
   rightArm = function () {
     draw(60, 46, 100, 50);
   };
+
   leftArm = function () {
     draw(60, 46, 20, 50);
   };
+
   rightLeg = function () {
-    draw(60, 46, 20, 50);
+    draw(60, 70, 100, 100);
   };
+
   leftLeg = function () {
     draw(60, 70, 20, 100);
   };
@@ -177,4 +184,105 @@ window.onload = function () {
     frame2,
     frame1,
   ];
+
+  // OnClick Function
+  check = function () {
+    list.onclick = function () {
+      var geuss = this.innerHTML;
+      this.setAttribute("class", "active");
+      this.onclick = null;
+      for (var i = 0; i < word.length; i++) {
+        if (word[i] === geuss) {
+          geusses[i].innerHTML = geuss;
+          counter += 1;
+        }
+      }
+      var j = word.indexOf(geuss);
+      if (j === -1) {
+        lives -= 1;
+        comments();
+        animate();
+      } else {
+        comments();
+      }
+    };
+  };
+
+  // Play
+  play = function () {
+    categories = [
+      [
+        "everton",
+        "liverpool",
+        "swansea",
+        "chelsea",
+        "hull",
+        "manchester-city",
+        "newcastle-united",
+      ],
+      ["alien", "dirty-harry", "illegal-immigrant", "finding-nemo", "jaws"],
+      ["manchester", "milan", "madrid", "amsterdam", "prague"],
+    ];
+
+    chosenCategory = categories[Math.floor(Math.random() * categories.length)];
+    word = chosenCategory[Math.floor(Math.random() * chosenCategory.length)];
+    word = word.replace(/\s/g, "-");
+    console.log(word);
+    buttons();
+
+    geusses = [];
+    lives = 1;
+    counter = 0;
+    space = 0;
+    result();
+    comments();
+    selectCat();
+    canvas();
+  };
+
+  play();
+
+  // Hint
+
+  hint.onclick = function () {
+    hints = [
+      [
+        "Based in Mersyside",
+        "Based in Mersyside",
+        "First Welsh team to reach the Premier Leauge",
+        "Owned by A russian Billionaire",
+        "Once managed by Phil Brown",
+        "2013 FA Cup runners up",
+        "Gazza's first club",
+      ],
+      [
+        "Science-Fiction horror film",
+        "1971 American action film",
+        "Commit half of the crimes",
+        "Animated Fish",
+        "Giant great white shark",
+      ],
+      [
+        "Northern city in the UK",
+        "Home of AC and Inter",
+        "Spanish capital",
+        "Netherlands capital",
+        "Czech Republic capital",
+      ],
+    ];
+
+    var catagoryIndex = categories.indexOf(chosenCategory);
+    var hintIndex = chosenCategory.indexOf(word);
+    showClue.innerHTML = "Clue: - " + hints[catagoryIndex][hintIndex];
+  };
+
+  // Reset
+
+  document.getElementById("reset").onclick = function () {
+    correct.parentNode.removeChild(correct);
+    letters.parentNode.removeChild(letters);
+    showClue.innerHTML = "";
+    context.clearRect(0, 0, 400, 400);
+    play();
+  };
 };
